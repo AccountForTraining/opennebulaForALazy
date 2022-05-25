@@ -3,7 +3,7 @@
   hosts: all
   vars_files:
     - config.yml
-    - "{{ project_dir }}/docker/docker-config.yml" # надо сделать
+    - "{{ project_dir }}/docker/docker-config.yml"
   vars:
     docker_compose_dir: /opennebula-docker-files
   become: yes

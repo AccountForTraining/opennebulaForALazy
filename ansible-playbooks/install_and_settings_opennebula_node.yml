@@ -4,7 +4,7 @@
   become: yes
   vars_files:
     - config.yml
-    - "{{ project_dir }}/docker/docker-config.yml" # надо сделать
+    - "{{ project_dir }}/docker/docker-config.yml"
 
   tasks:
   - name: Adding opennebula key
@@ -32,7 +32,7 @@
       group: oneadmin
       mode: '700'
 
-  # этого тут вроде быть не должно, но что поделать, одна задача
+  # Этого по идее тут быть не должно, но что поделать -- всего одна задача
   # Тут мы подключаем ноду vm к opennebula
   - name: Connect opennebula-node (vm) to opennebula front-end
     community.docker.docker_container_exec:
