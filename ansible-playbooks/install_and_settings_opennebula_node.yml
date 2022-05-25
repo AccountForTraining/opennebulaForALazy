@@ -2,6 +2,9 @@
 - name: Install and settings opennebula node
   hosts: all
   become: yes
+  vars_files:
+    - config.yml
+    - "{{ project_dir }}/docker/docker_config.yml" # надо сделать
 
   tasks:
   - name: Adding opennebula key
@@ -18,13 +21,20 @@
       - opennebula-node
       update_cache: yes
 
-  - name: Settings. Create .ssh directory
+  - name: Copying oneadmin keys from container to virtual_machine
+    shell: "docker cp {{ opennebula_container_name }}:/var/lib/one/.ssh/ /var/lib/one/"
+
+  - name: Change permisson for keys
     file:
       path: /var/lib/one/.ssh
-      state: directory
+      recurse: yes
       owner: oneadmin
       group: oneadmin
+      mode: '700'
 
-  # Найти способ переносить директории
-  - name: Settings kyes
-      shell: "docker cp {{ opennebula_container_name }}:/var/lib/one/.ssh/* /var/lib/one/.ssh/" # проверить владельца файла
+  # этого тут вроде быть не должно, но что поделать, одна задача
+  # Тут мы подключаем ноду vm к opennebula
+  - name: Connect opennebula-node (vm) to opennebula front-end
+    docker_container_exec:
+      container: {{ opennebula_container_name }}
+      command: /bin/bash -c "onehost create {{ vm_ip_in_docker_network }} -v kvm -i kvm"

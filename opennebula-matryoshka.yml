@@ -1,0 +1,14 @@
+### Установка docker
+# Тут должно быть описание
+- import_playbook: ansible-playbooks/install_docker.yml
+### ###
+
+### Развёртывание контейнера с opennebula front-end
+# Тут должно быть описание
+- import_playbook: ansible-playbooks/deploy_and_settings_container_opennebula.yml
+###
+
+### Настройка ноды и подключение к opennebula front-end
+# Тут должно быть описание
+- import_playbook: install_and_settings_opennebula_node.yml
+###
