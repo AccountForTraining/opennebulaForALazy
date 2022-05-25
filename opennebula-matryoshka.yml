@@ -10,5 +10,5 @@
 
 ### Настройка ноды и подключение к opennebula front-end
 # Тут должно быть описание
-- import_playbook: install_and_settings_opennebula_node.yml
+- import_playbook: ansible-playbooks/install_and_settings_opennebula_node.yml
 ###

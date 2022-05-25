@@ -2,6 +2,8 @@
 - name: Install docker
   hosts: all
   become: yes
+  vars_files:
+    - config.yml
 
   tasks:
   - name: Install docker and docker-compose
@@ -9,5 +11,10 @@
       name:
       - docker
       - docker-compose
-      state: latest
+      state: present
       update_cache: yes
+  - name: post-installation steps
+    user:
+      name: "{{ vm_user }}"
+      groups: docker
+      append: yes

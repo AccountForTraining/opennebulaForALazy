@@ -13,8 +13,8 @@ front_end_port = 80
 vm_user = "vagrant"
 remote_user_dir = "/home/vagrant"
 
-# Пишем абсолютные пути для плейбуков, чтобы те не потеряли докер файлы
-# (находятся в корне проекта). Ну и пользователя тоже запишем
+# Пишем абсолютные пути для плейбуков, чтобы те не потеряли докер файлы.
+# Ну и пользователя тоже запишем
 File.write(
 	"ansible-playbooks/config.yml", 
 	"---\n
@@ -35,6 +35,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 		vbox.name = host_name
 		vbox.memory = 4096
 		vbox.cpus = 2
+
+	# Вот и пользователь подъехал
+	config.ssh.username = "#{vm_user}"
+  	config.ssh.password = "xxXX1234"  # Позже вынести всё в отдельные файлики
 
 	# Закинули ключик на тачку
 	config.vm.provision "shell", inline: <<-SHELL

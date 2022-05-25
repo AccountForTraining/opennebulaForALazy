@@ -35,6 +35,6 @@
   # этого тут вроде быть не должно, но что поделать, одна задача
   # Тут мы подключаем ноду vm к opennebula
   - name: Connect opennebula-node (vm) to opennebula front-end
-    docker_container_exec:
-      container: {{ opennebula_container_name }}
+    community.docker.docker_container_exec:
+      container: "{{ opennebula_container_name }}"
       command: /bin/bash -c "onehost create {{ vm_ip_in_docker_network }} -v kvm -i kvm"

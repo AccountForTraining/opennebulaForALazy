@@ -6,28 +6,25 @@
     - "{{ project_dir }}/docker/docker-config.yml" # надо сделать
   vars:
     docker_compose_dir: /opennebula-docker-files
+  become: yes
 
   tasks:
-  - name: Preparing a files for deploy
+  - name: Preparing a files for deploy. Create directory for compose
     file:
-      path: {{ docker_compose_dir }}
+      path: "{{ docker_compose_dir }}"
       state: directory
+  - name: Preparing a files for deploy. Copy files compose
     copy:
-      src: "{{ project_dir }}/docker/docker-compose.yml" # это тоже
-      dest: "{{ docker_compose_dir }}/docker-compose.yml"
+      src: "{{ project_dir }}/docker/"
+      dest: "{{ docker_compose_dir }}/"
       owner: "{{ vm_user }}"
       group: "{{ vm_user }}"
 
   - name: Deploy opennebula front-end
     docker_compose:
-      project_src: {{ docker_compose_dir }}
-
-#  - name: Settings opennebula front-end. Hosts
-#    docker_container_exec:
-#      container: {{ opennebula_container_name }}
-#      command: /bin/bash -c "echo '{{ opennebula_backend_ip }} {{ containter_hostname }}' > /etc/hosts"
+      project_src: "{{ docker_compose_dir }}"
 
   - name: Settings opennebula front-end. Host RSA-keys
-    docker_container_exec:
-      container: {{ opennebula_container_name }}
+    community.docker.docker_container_exec:
+      container: "{{ opennebula_container_name }}"
       command: /bin/bash -c "ssh-keyscan {{ opennebula_backend_ip }} {{ vm_ip_in_docker_network }}"
