@@ -20,14 +20,14 @@
 ____
 
 ## ToDo List:
-:white_check_mark: Vagrant
-:black_square_button: test Vagrant
-:white_check_mark: Ansible-playbooks
-:white_check_mark: test Ansible-playbooks
-:black_square_button: Вынести все пароли в файлы, переменные среды, секреты
-:white_check_mark: Docker-compose
-:white_check_mark: test Docker-compose
-:black_square_button: Документация ко всей кодовой базе
+:white_check_mark: Vagrant    
+:black_square_button: test Vagrant    
+:white_check_mark: Ansible-playbooks    
+:white_check_mark: test Ansible-playbooks    
+:black_square_button: Вынести все пароли в файлы, переменные среды, секреты    
+:white_check_mark: Docker-compose    
+:white_check_mark: test Docker-compose    
+:black_square_button: Документация ко всей кодовой базе    
 
 ____
 
