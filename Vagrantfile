@@ -3,13 +3,26 @@
 
 project_dir = File.dirname(File.expand_path(__FILE__))
 
+
+# Взяли ключик хоста, ещё пригодится
 ssh_public_key = File.read(File.join(Dir.home, ".ssh", "id_rsa.pub"))
 
 host_name = "opennebula-matryoshka"
 host_ip = "192.168.56.112"
 front_end_port = 80
-remote_user = "vagrant"
+vm_user = "vagrant"
 remote_user_dir = "/home/vagrant"
+
+# Пишем абсолютные пути для плейбуков, чтобы те не потеряли докер файлы
+# (находятся в корне проекта). Ну и пользователя тоже запишем
+File.write(
+	"ansible-playbooks/config.yml", 
+	"---\n
+	project_dir: #{project_dir}\n
+	vm_user: #{vm_user}"
+)
+
+
 
 VAGRANTFILE_API_VERSION = "2"
 

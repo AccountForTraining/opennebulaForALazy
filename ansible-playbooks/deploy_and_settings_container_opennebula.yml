@@ -1,0 +1,33 @@
+---
+- name: Deploy and settings container opennebula
+  hosts: all
+  vars_files:
+    - config.yml
+    - "{{ project_dir }}/docker_config.yml" # надо сделать
+  vars:
+    docker_compose_dir: /opennebula-docker-files
+
+  tasks:
+  - name: Preparing a files for deploy
+    file:
+      path: {{ docker_compose_dir }}
+      state: directory
+    copy:
+      src: "{{ project_dir }}/docker/docker-compose.yml" # это тоже
+      dest: "{{ docker_compose_dir }}/docker-compose.yml"
+      owner: "{{ vm_user }}"
+      group: "{{ vm_user }}"
+
+  - name: Deploy opennebula front-end
+    docker_compose:
+      project_src: {{ docker_compose_dir }}
+
+  - name: Settings opennebula front-end. Hosts
+    docker_container_exec:
+      container: {{ opennebula_container }}
+      command: /bin/bash -c "echo '{{ container_ip }} {{ containter_hostname }}' > /etc/hosts"
+
+  - name: Settings opennebula front-end. Host RSA-keys
+    docker_container_exec:
+      container: {{ opennebula_container }}
+      command: /bin/bash -c "ssh-keyscan {{ containter_hostname }} {{ vm_ip_in_docker_network }}"

@@ -1,0 +1,13 @@
+---
+- name: Install docker
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Install docker and docker-compose
+    apt:
+      name:
+      - docker
+      - docker-compose
+      state: latest
+      update_cache: yes

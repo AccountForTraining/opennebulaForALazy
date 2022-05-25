@@ -1,0 +1,30 @@
+---
+- name: Install and settings opennebula node
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Adding opennebula key
+    apt_key:
+      url: https://downloads.opennebula.io/repo/Ubuntu/repo.key
+      state: present
+  - name: Adding opennebula repository
+    apt_repository:
+      repo: deb https://downloads.opennebula.io/repo/6.4/Ubuntu/20.04/ stable opennebula
+      state: present
+  - name: Install opennebula node
+    apt:
+      name:
+      - opennebula-node
+      update_cache: yes
+
+  - name: Settings. Create .ssh directory
+    file:
+      path: /var/lib/one/.ssh
+      state: directory
+      owner: oneadmin
+      group: oneadmin
+
+  # Найти способ переносить директории
+  - name: Settings kyes
+      shell: "docker cp {{ opennebula_container_name }}:/var/lib/one/.ssh/* /var/lib/one/.ssh/" # проверить владельца файла
