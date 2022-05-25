@@ -1,0 +1,5 @@
+---
+# Пардон за мой французкий, но это не масштабируемо и в будущем будет исправлено (немного знаний не хватает)
+opennebula_backend_ip: 172.16.0.2
+opennebula_container_name: opennebula-front-end
+vm_ip_in_docker_network: 172.16.0.1

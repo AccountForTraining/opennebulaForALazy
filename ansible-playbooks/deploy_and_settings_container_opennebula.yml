@@ -3,7 +3,7 @@
   hosts: all
   vars_files:
     - config.yml
-    - "{{ project_dir }}/docker/docker_config.yml" # надо сделать
+    - "{{ project_dir }}/docker/docker-config.yml" # надо сделать
   vars:
     docker_compose_dir: /opennebula-docker-files
 
@@ -22,12 +22,12 @@
     docker_compose:
       project_src: {{ docker_compose_dir }}
 
-  - name: Settings opennebula front-end. Hosts
-    docker_container_exec:
-      container: {{ opennebula_container_name }}
-      command: /bin/bash -c "echo '{{ container_ip }} {{ containter_hostname }}' > /etc/hosts"
+#  - name: Settings opennebula front-end. Hosts
+#    docker_container_exec:
+#      container: {{ opennebula_container_name }}
+#      command: /bin/bash -c "echo '{{ opennebula_backend_ip }} {{ containter_hostname }}' > /etc/hosts"
 
   - name: Settings opennebula front-end. Host RSA-keys
     docker_container_exec:
       container: {{ opennebula_container_name }}
-      command: /bin/bash -c "ssh-keyscan {{ containter_hostname }} {{ vm_ip_in_docker_network }}"
+      command: /bin/bash -c "ssh-keyscan {{ opennebula_backend_ip }} {{ vm_ip_in_docker_network }}"

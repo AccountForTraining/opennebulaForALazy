@@ -1,0 +1,35 @@
+version: "3.3"
+services:
+  opennebula-front-end:
+    container_name: ${opennebula_container_name}
+    image: "opennebula/opennebula"
+    ports:
+      - "22:22"
+      - "80:80"
+      - "2474:2474"
+      - "4124:4124"
+      - "4124:4124/udp"
+      - "5030:5030"
+      - "29876:29876"
+    environment:
+      OPENNEBULA_HOST: opennebula.demo.lab
+      OPENNEBULA_SSH_HOST: opennebula.demo.lab
+      ONEADMIN_PASSWORD: xxXX1234  # закройте глазки, здесь пароль
+      DIND_ENABLED: "yes"
+      SUNSTONE_HTTPS_ENABLED: "no"
+
+#    Не работает...
+#    env_file:
+#      opennebula-front-end.env
+
+    networks:
+      backend:
+        ipv4_address: "${opennebula_backend_ip}"
+
+
+networks:
+  backend:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 172.16.0.0/16
